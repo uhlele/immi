@@ -53,6 +53,18 @@ def validate_user(request, activation_token):
                         data={'success': True, "message": "Activation Error"})
 
 @api_view(["POST"])
-def upload(request):
-    ImmiDocument.objects.create(name=request.FILES.get("file"))
-    return Response(status=status.HTTP_200_OK, data={'success': True, 'message' : "File uploaded" })
+def create_service_and_upload(request):
+    try:
+        service_number = methods.validate_servie_create_data(request.date)
+        ImmiDocument.objects.create(name=request.FILES.get("file"), service_request_number=service_number)
+        return Response(status=status.HTTP_200_OK, data={'success': True, 'message' : "File uploaded" })
+    except Exception as e:
+        return Response(status=status.HTTP_200_OK, data={'success': False, 'message': str(e)})
+
+@api_view(["POST"])
+def approve_payment(request):
+    try:
+        data = methods.approve_payment(request.data)
+        return Response(status=status.HTTP_200_OK, data={'success': True, 'message': "Payment recorded"})
+    except Exception as e:
+        return Response(status=status.HTTP_200_OK, data={'success': True, 'message': str(e)})

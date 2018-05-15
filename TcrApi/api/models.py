@@ -24,5 +24,37 @@ class ImmiUser(TimeStampedModel):
     class Meta:
         db_table = 'immi_user'
 
-class ImmiDocument(TimeStampedModel):
+
+class service(TimeStampedModel):
+    email = models.EmailField(max_length=255, blank=False)
+    service_name = models.CharField(max_length=100, blank=False)
+    service_request_number = models.CharField(max_length=100, blank=False)
+    payment_status = models.BooleanField(default=False)
+    action_status = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'service'
+
+
+class ImmiDocumentUser(TimeStampedModel):
     name = models.FileField()
+    service_request_number = models.CharField(max_length=100, blank=False)
+
+    class Meta:
+        db_table = 'document_user'
+
+
+class ImmiDocumentImmi(TimeStampedModel):
+    name = models.FileField()
+    service_request_number = models.CharField(max_length=100, blank=False)
+
+    class Meta:
+        db_table = 'immi_immi'
+
+class Transactions(TimeStampedModel):
+    email = models.EmailField(max_length=255, blank=False)
+    service_request_number = models.CharField(max_length=100, blank=False)
+    amount = models.FloatField()
+
+    class Meta:
+        db_table = 'transactions'

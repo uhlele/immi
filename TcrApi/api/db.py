@@ -1,4 +1,4 @@
-from .models import ImmiUser
+from .models import ImmiUser, service, Transactions
 from .email_service import send_email
 from .helpers import generate_random_key
 
@@ -44,5 +44,21 @@ def activate_user(activation_token_a, activation_token_b):
         return True
     else:
         return False
+
+def create_service(email, service_name):
+    service_request_number =  generate_random_key()
+    service_dict = {'email': email, 'service_name': service_name,  'service_request_number' : service_request_number}
+    service_object = service.objects.create(**service_dict)
+    return service_dict['service_request_number']
+
+def approve_payment(email, service_request_number, amount):
+    if service.objects.filter(email=email, service_request_number = service_request_number).exists():
+        service.objects.filter(email=email, service_request_number=service_request_number).update(payment_status=True)
+        Transactions.objects.create(email = email, service_request_number = service_request_number, amount= amount)
+        return True
+    else:
+        return False
+
+
 
 

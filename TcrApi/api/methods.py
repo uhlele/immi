@@ -18,5 +18,13 @@ def validate_registration_details(data):
     else:
         return False
 
+def validate_servie_create_data(data):
+    if data['emial'] and data['service_name']:
+        return db.create_service(data['email'], data['service_name'])
+
 def activate_user(activation_token_a, activation_token_b):
     return db.activate_user(activation_token_a, activation_token_b)
+
+def approve_payment(data):
+    if data['email'] and data['service_request_number'] and data['amount']:
+        return db.approve_payment(data['email'], data['service_request_number'], data['amount'])
