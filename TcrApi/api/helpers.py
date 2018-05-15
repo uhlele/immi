@@ -1,8 +1,8 @@
 import uuid
-
+#import secrets
 import hashlib
-import secrets
 import string
+import random
 
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
@@ -12,5 +12,5 @@ def convert_password_to_md5(password):
 
 def generate_random_key(): 
     alphabet = string.ascii_letters + string.digits
-    random_key = ''.join(secrets.choice(alphabet) for i in range(10))
-    return random_key
+    key = ''.join(random.choice(alphabet) for _ in range(10))
+    return key

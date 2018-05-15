@@ -16,13 +16,12 @@ def send_email(receiver, body):
     subject = 'Confirm Email'
     body = body
 
-    email_text = """\  
-    From:{}
-    To: {} 
+    email_text = """ 
     Subject: {}
 
+
     {}
-    """.format(sent_from, to, subject, body)
+    """.format(subject, body)
 
     try:  
         server = smtplib.SMTP_SSL('smtp.gmail.com', 465)

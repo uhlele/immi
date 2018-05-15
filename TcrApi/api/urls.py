@@ -13,5 +13,8 @@ urlpatterns = [
         name="registration"),
     url(r'^activate_user/(?P<activation_token>.*)/$',
         views.validate_user,
-        name="validate_user")
+        name="validate_user"),
+    url(r'^upload/$',
+        views.upload,
+        name="upload")
 ]

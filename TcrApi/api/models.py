@@ -24,4 +24,5 @@ class ImmiUser(TimeStampedModel):
     class Meta:
         db_table = 'immi_user'
 
-
+class ImmiDocument(TimeStampedModel):
+    name = models.FileField()

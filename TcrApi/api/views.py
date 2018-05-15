@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from . import methods
+from .models import ImmiDocument
 
 
 @api_view(["POST"])
@@ -24,7 +25,7 @@ def registration(request):
     try:
         data = methods.validate_registration_details(request.data)
         return Response(status=status.HTTP_200_OK,
-                        data=data)
+                        data = data)
     except ValidationError as v_error:
         return Response(status=status.HTTP_400_BAD_REQUEST,
                         data={'success': False, 'message': str(v_error)})
@@ -50,3 +51,8 @@ def validate_user(request, activation_token):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST,
                         data={'success': True, "message": "Activation Error"})
+
+@api_view(["POST"])
+def upload(request):
+    ImmiDocument.objects.create(name=request.FILES.get("file"))
+    return Response(status=status.HTTP_200_OK, data={'success': True, 'message' : "File uploaded" })

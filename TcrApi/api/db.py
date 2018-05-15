@@ -34,9 +34,9 @@ def register_user(email, password, first_name, last_name):
         user_dict = {"first_name": first_name, "last_name": last_name,
                 "password": password, "email": email, "activation_token_a" : activation_key_a, "activation_token_b" : activation_key_b}
         register_user = ImmiUser.objects.create(**user_dict)
-        activation_url = "localhost:8000/api/activate_user/{}".format(activation_key_a + activation_key_b)
+        activation_url = "13.58.30.107:8000/api/activate_user/{}".format(activation_key_a + activation_key_b)
         send_email(email, "Please confirm your emailid by clicking at: {}".format(activation_url))
-        return user_dict['email']
+        return {"success": True, "message": user_dict['email']}
 
 def activate_user(activation_token_a, activation_token_b):
     if ImmiUser.objects.filter(activation_token_a=activation_token_a, activation_token_b=activation_token_b).exists():
